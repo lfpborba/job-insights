@@ -21,31 +21,54 @@ def get_min_salary(path: str) -> int:
     ]
     return min(min_salaries)
 
+def jobValidate(job: Dict) -> bool:
+    notValid = True
+
+    if not isinstance(job["min_salary"], (str, int)):
+        notValid
+    elif (
+        isinstance(job["min_salary"], str) and not job["min_salary"].isdigit()
+    ):
+        notValid
+    elif not isinstance(job["max_salary"], (str, int)):
+        notValid
+    elif (
+        isinstance(job["max_salary"], str) and not job["max_salary"].isdigit()
+    ):
+        notValid
+    else:
+        notValid = False
+    return notValid
+
+
+def validateParams(job: Dict, salary: Union[int, str]) -> bool:
+    notValid = True
+
+    if jobValidate(job):
+        notValid
+    elif not isinstance(salary, (str, int)):
+        notValid
+    elif (
+        isinstance(salary, str) and not salary.isdigit()
+    ):
+        notValid
+    else:
+        notValid = False
+    return notValid
 
 def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
-    """Checks if a given salary is in the salary range of a given job
+    match_result = False
 
-    Parameters
-    ----------
-    job : dict
-        The job with `min_salary` and `max_salary` keys
-    salary : int
-        The salary to check if matches with salary range of the job
-
-    Returns
-    -------
-    bool
-        True if the salary is in the salary range of the job, False otherwise
-
-    Raises
-    ------
-    ValueError
-        If `job["min_salary"]` or `job["max_salary"]` doesn't exists
-        If `job["min_salary"]` or `job["max_salary"]` aren't valid integers
-        If `job["min_salary"]` is greather than `job["max_salary"]`
-        If `salary` isn't a valid integer
-    """
-    raise NotImplementedError
+    if "min_salary" not in job or "max_salary" not in job:
+        raise ValueError
+    elif validateParams(job, salary):
+        raise ValueError
+    else:
+        if int(job["min_salary"]) > int(job["max_salary"]):
+            raise ValueError
+        elif int(job["min_salary"]) <= int(salary) <= int(job["max_salary"]):
+            match_result = True
+    return match_result
 
 
 def filter_by_salary_range(
