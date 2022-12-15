@@ -21,6 +21,7 @@ def get_min_salary(path: str) -> int:
     ]
     return min(min_salaries)
 
+
 def jobValidate(job: Dict) -> bool:
     notValid = True
 
@@ -56,6 +57,7 @@ def validateParams(job: Dict, salary: Union[int, str]) -> bool:
         notValid = False
     return notValid
 
+
 def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
     match_result = False
 
@@ -79,11 +81,11 @@ def filter_by_salary_range(
     remove_invalid_range = [
         job for job in jobs if int(job["min_salary"]) < int(job["max_salary"])
     ]
-    filtered_jobs = list()
+    filteredJobs = list()
     for job in remove_invalid_range:
         try:
             if matches_salary_range(job, salary):
-                filtered_jobs.append(job)
+                filteredJobs.append(job)
         except ValueError:
             print("Invalid value")
-    return filtered_jobs
+    return filteredJobs
